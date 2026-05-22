@@ -47,13 +47,13 @@
                     <h4>{{ item.title }}</h4>
                     <p>{{ item.description }}</p>
                     <div class="listing-footer">
-                        <span class="user-name">👤 {{ item.name }} — {{ item.department }}</span>
+                        <span class="user-name"> {{ item.name }} — {{ item.department }}</span>
                         <a href="mailto:{{ item.email }}" class="btn small">Contact Seller</a>
                     </div>
                 </div>
                 {% endfor %}
             {% else %}
-                <p class="empty">No listings yet — be the first! 👆</p>
+                <p class="empty">No listings yet — be the first! </p>
             {% endif %}
         </div>
     </section>

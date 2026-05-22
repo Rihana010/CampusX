@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusX - Login</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>CampusX</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Skills</a></li>
+            <li><a href="#">Marketplace</a></li>
+            <li><a href="/auth">Login</a></li>
+        </ul>
+    </nav>
+
+    <section class="auth-container">
+        <div class="auth-box">
+            <div class="auth-tabs">
+                <button type="button" class="tab-btn active" onclick="showTab('login', this)">Login</button>
+                <button type="button" class="tab-btn" onclick="showTab('register', this)">Register</button>
+            </div>
+
+            <div id="login" class="tab-content">
+                <h2>Welcome Back</h2>
+                <form action="/login" method="POST">
+                    <input type="email" placeholder="College Email" name="email" required>
+                    <input type="password" placeholder="Password" name="password" required>
+                    <input type="submit" value="Login" class="btn">
+                </form>
+            </div>
+
+            <div id="register" class="tab-content hidden">
+                <h2>Join CampusX</h2>
+                <form action="/register" method="POST">
+                    <input type="text" placeholder="Full Name" name="name" required>
+                    <input type="email" placeholder="College Email" name="email" required>
+                    <input type="text" placeholder="Department" name="department" required>
+                    <input type="password" placeholder="Password" name="password" required>
+                    <input type="submit" value="Register" class="btn">
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function showTab(tab, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tab).classList.remove('hidden');
+            btn.classList.add('active');
+        }
+    </script>
+<footer>
+    <div class="footer-content">
+        <div class="footer-left">
+            <h2>CampusX</h2>
+            <p>The ultimate student community platform</p>
+        </div>
+        <div class="footer-links">
+            <h4>Connect</h4>
+            <a href="https://www.linkedin.com/in/aysha-rihana-21a6a7335" target="_blank">LinkedIn</a>
+            <a href="https://github.com/Rihana010" target="_blank">GitHub</a>
+            <a href="mailto:aysharihana010@gmail.com">Email</a>
+        </div>
+        <div class="footer-links">
+            <h4>Platform</h4>
+            <a href="/skills">Skill Swap</a>
+            <a href="/marketplace">Marketplace</a>
+            <a href="/auth">Login</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 CampusX — Made with 🩶 by Aysha Rihana</p>
+    </div>
+</footer>
+</body>
+</html>

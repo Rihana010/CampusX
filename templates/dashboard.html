@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusX - Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <nav>
+        <h1>CampusX</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Skills</a></li>
+            <li><a href="#">Marketplace</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="dashboard">
+        <h2>Welcome, {{ name }}! 👋</h2>
+        <p>What do you want to do today?</p>
+        <div class="dashboard-cards">
+            <div class="card">
+                <h3>🤝 Skill Swap</h3>
+                <p>Offer a skill or find someone to learn from</p>
+                <a href="/skills" class="btn">Explore Skills</a>
+            </div>
+            <div class="card">
+                <h3>🛒 Marketplace</h3>
+                <p>Buy or sell books, notes, equipment</p>
+                <a href="#" class="btn">Browse Listings</a>
+            </div>
+        </div>
+    </section>
+<footer>
+    <div class="footer-content">
+        <div class="footer-left">
+            <h2>CampusX</h2>
+            <p>The ultimate student community platform</p>
+        </div>
+        <div class="footer-links">
+            <h4>Connect</h4>
+            <a href="https://www.linkedin.com/in/aysha-rihana-21a6a7335" target="_blank">LinkedIn</a>
+            <a href="https://github.com/Rihana010" target="_blank">GitHub</a>
+            <a href="mailto:aysharihana010@gmail.com">Email</a>
+        </div>
+        <div class="footer-links">
+            <h4>Platform</h4>
+            <a href="/skills">Skill Swap</a>
+            <a href="/marketplace">Marketplace</a>
+            <a href="/auth">Login</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 CampusX — Made with 🩶 by Aysha Rihana</p>
+    </div>
+</footer>
+</body>
+</html>

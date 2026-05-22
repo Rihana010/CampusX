@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusX - Skills</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <nav>
+        <h1>CampusX</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/skills">Skills</a></li>
+            <li><a href="/marketplace">Marketplace</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-container">
+        <div class="page-header">
+            <h2>🤝 Skill Swap</h2>
+            <p>Offer a skill, find someone to learn from</p>
+        </div>
+
+        <div class="post-form">
+            <h3>Post a Skill</h3>
+            <form action="/skills/post" method="POST">
+                <input type="text" name="offer" placeholder="Skill you can teach (e.g. Python, Guitar)" required>
+                <input type="text" name="want" placeholder="Skill you want to learn (e.g. Design, Math)" required>
+                <textarea name="description" placeholder="Tell us a bit more about yourself..." rows="3"></textarea>
+                <input type="submit" value="Post Skill" class="btn">
+            </form>
+        </div>
+
+        <div class="listings">
+            <h3>Browse Skills</h3>
+            {% if skills %}
+                {% for skill in skills %}
+                <div class="listing-card">
+                    <div class="listing-top">
+                        <span class="tag offer">Offers: {{ skill.offer }}</span>
+                        <span class="tag want">Wants: {{ skill.want }}</span>
+                    </div>
+                    <p>{{ skill.description }}</p>
+                    <div class="listing-footer">
+                        <span class="user-name">👤 {{ skill.name }} — {{ skill.department }}</span>
+                        <a href="mailto:{{ skill.email }}" class="btn small">Connect</a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty">No skill posts yet — be the first! 👆</p>
+            {% endif %}
+        </div>
+    </section>
+<footer>
+    <div class="footer-content">
+        <div class="footer-left">
+            <h2>CampusX</h2>
+            <p>The ultimate student community platform</p>
+        </div>
+        <div class="footer-links">
+            <h4>Connect</h4>
+            <a href="https://www.linkedin.com/in/aysha-rihana-21a6a7335" target="_blank">LinkedIn</a>
+            <a href="https://github.com/Rihana010" target="_blank">GitHub</a>
+            <a href="mailto:aysharihana010@gmail.com">Email</a>
+        </div>
+        <div class="footer-links">
+            <h4>Platform</h4>
+            <a href="/skills">Skill Swap</a>
+            <a href="/marketplace">Marketplace</a>
+            <a href="/auth">Login</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 CampusX — Made with 🩶 by Aysha Rihana</p>
+    </div>
+</footer>
+</body>
+</html>

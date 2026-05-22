@@ -15,6 +15,7 @@
             <li><a href="#">Skills</a></li>
             <li><a href="#">Marketplace</a></li>
             <li><a href="/auth">Login</a></li>
+            <li><button class="theme-toggle" onclick="toggleTheme()">Light</button></li>
         </ul>
     </nav>
 
@@ -46,5 +47,12 @@
         <p>© 2026 CampusX — Made with 🩶 by Aysha Rihana</p>
     </div>
 </footer>
+<script>
+    function toggleTheme() {
+        document.body.classList.toggle('light');
+        const btn = document.querySelector('.theme-toggle');
+        btn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
+    }
+</script>
 </body>
 </html>

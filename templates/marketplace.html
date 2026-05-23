@@ -21,7 +21,7 @@
 
     <section class="page-container">
         <div class="page-header">
-            <h2>🛒 Marketplace</h2>
+            <h2>Marketplace</h2>
             <p>Buy and sell books, notes, equipment and more</p>
         </div>
 
@@ -49,50 +49,53 @@
                     <p>{{ item.description }}</p>
                     <div class="listing-footer">
                         <span class="user-name">{{ item.users.name }} — {{ item.users.department }}</span>
-<a href="mailto:{{ item.users.email }}" class="btn small">Contact Seller</a>
+                        <a href="mailto:{{ item.users.email }}" class="btn small">Contact Seller</a>
+                    </div>
                 </div>
                 {% endfor %}
             {% else %}
-                <p class="empty">No listings yet — be the first! </p>
+                <p class="empty">No listings yet — be the first!</p>
             {% endif %}
         </div>
     </section>
-<footer>
-    <div class="footer-content">
-        <div class="footer-left">
-            <h2>CampusX</h2>
-            <p>The ultimate student community platform</p>
-        </div>
-        <div class="footer-links">
-            <h4>Connect</h4>
-            <a href="https://www.linkedin.com/in/aysha-rihana-21a6a7335" target="_blank">LinkedIn</a>
-            <a href="https://github.com/Rihana010" target="_blank">GitHub</a>
-            <a href="mailto:aysharihana010@gmail.com">Email</a>
-        </div>
-        <div class="footer-links">
-            <h4>Platform</h4>
-            <a href="/skills">Skill Swap</a>
-            <a href="/marketplace">Marketplace</a>
-            <a href="/auth">Login</a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>© 2026 CampusX — Made with 🩶 by Aysha Rihana</p>
-    </div>
-</footer>
-<script>
-    if (localStorage.getItem('theme') === 'light') {
-        document.body.classList.add('light');
-        document.querySelector('.theme-toggle').textContent = 'Dark';
-    }
 
-    function toggleTheme() {
-        document.body.classList.toggle('light');
-        const btn = document.querySelector('.theme-toggle');
-        const isLight = document.body.classList.contains('light');
-        btn.textContent = isLight ? 'Dark' : 'Light';
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    }
-</script>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>CampusX</h2>
+                <p>The ultimate student community platform</p>
+            </div>
+            <div class="footer-links">
+                <h4>Connect</h4>
+                <a href="https://www.linkedin.com/in/aysha-rihana-21a6a7335" target="_blank">LinkedIn</a>
+                <a href="https://github.com/Rihana010" target="_blank">GitHub</a>
+                <a href="mailto:aysharihana010@gmail.com">Email</a>
+            </div>
+            <div class="footer-links">
+                <h4>Platform</h4>
+                <a href="/skills">Skill Swap</a>
+                <a href="/marketplace">Marketplace</a>
+                <a href="/auth">Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 CampusX — Made with 🩶 by Aysha Rihana</p>
+        </div>
+    </footer>
+
+    <script>
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light');
+            document.querySelector('.theme-toggle').textContent = 'Dark';
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light');
+            const btn = document.querySelector('.theme-toggle');
+            const isLight = document.body.classList.contains('light');
+            btn.textContent = isLight ? 'Dark' : 'Light';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+    </script>
 </body>
 </html>

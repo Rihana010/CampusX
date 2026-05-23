@@ -1,17 +1,13 @@
 from flask import Flask, render_template, request, redirect, session
-from dotenv import load_dotenv
 import hashlib
 import requests as req
 import os
-
-load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'campusx_secret_123'
 
 SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_KEY = os.getenv('SUPABASE_KEY')
-
 HEADERS = {
     'apikey': SUPABASE_KEY,
     'Authorization': f'Bearer {SUPABASE_KEY}',

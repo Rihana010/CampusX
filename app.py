@@ -1,12 +1,16 @@
 from flask import Flask, render_template, request, redirect, session
+from dotenv import load_dotenv
 import hashlib
 import requests as req
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'campusx_secret_123'
 
-SUPABASE_URL = 'https://xbgutfybiepojuqrtsfk.supabase.co'
-SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZ3V0ZnliaWVwb2p1cXJ0c2ZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1NTA1NDcsImV4cCI6MjA5NTEyNjU0N30.ag6OtUlCPG5ssXjJFscqHYbPme23vqCnwyPdTaoqVL8'
+SUPABASE_URL = os.getenv('SUPABASE_URL')
+SUPABASE_KEY = os.getenv('SUPABASE_KEY')
 
 HEADERS = {
     'apikey': SUPABASE_KEY,

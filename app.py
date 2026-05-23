@@ -1,15 +1,27 @@
 from flask import Flask, render_template, request, redirect, session
-import sqlite3
 import hashlib
+import requests as req
 
 app = Flask(__name__)
 app.secret_key = 'campusx_secret_123'
-app.config['SESSION_TYPE'] = 'filesystem'
 
-def get_db():
-    conn = sqlite3.connect('campusx.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+SUPABASE_URL = 'https://xbgutfybiepojuqrtsfk.supabase.co'
+SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZ3V0ZnliaWVwb2p1cXJ0c2ZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1NTA1NDcsImV4cCI6MjA5NTEyNjU0N30.ag6OtUlCPG5ssXjJFscqHYbPme23vqCnwyPdTaoqVL8'
+
+HEADERS = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': f'Bearer {SUPABASE_KEY}',
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+}
+
+def db_get(table, params=None):
+    r = req.get(f'{SUPABASE_URL}/rest/v1/{table}', headers=HEADERS, params=params)
+    return r.json()
+
+def db_post(table, data):
+    r = req.post(f'{SUPABASE_URL}/rest/v1/{table}', headers=HEADERS, json=data)
+    return r.json()
 
 @app.route('/')
 def home():
@@ -26,28 +38,30 @@ def register():
     department = request.form['department']
     password = hashlib.sha256(request.form['password'].encode()).hexdigest()
     
-    db = get_db()
-    try:
-        db.execute('INSERT INTO users (name, email, department, password) VALUES (?, ?, ?, ?)',
-                   (name, email, department, password))
-        db.commit()
+    result = db_post('users', {
+        'name': name,
+        'email': email,
+        'department': department,
+        'password': password
+    })
+    
+    if isinstance(result, list) and result:
+        user = result[0]
+        session['user_id'] = user['id']
+        session['user_name'] = user['name']
         return redirect('/dashboard')
-    except:
+    else:
         return redirect('/auth?error=Email already exists')
-    finally:
-        db.close()
 
 @app.route('/login', methods=['POST'])
 def login():
     email = request.form['email']
     password = hashlib.sha256(request.form['password'].encode()).hexdigest()
     
-    db = get_db()
-    user = db.execute('SELECT * FROM users WHERE email=? AND password=?', 
-                      (email, password)).fetchone()
-    db.close()
+    result = db_get('users', {'email': f'eq.{email}'})
     
-    if user:
+    if isinstance(result, list) and result and result[0]['password'] == password:
+        user = result[0]
         session['user_id'] = user['id']
         session['user_name'] = user['name']
         return redirect('/dashboard')
@@ -64,58 +78,48 @@ def dashboard():
 def logout():
     session.clear()
     return redirect('/')
+
 @app.route('/skills')
 def skills():
     if 'user_id' not in session:
         return redirect('/auth')
-    db = get_db()
-    skills = db.execute('''
-        SELECT skills.*, users.name, users.department, users.email 
-        FROM skills JOIN users ON skills.user_id = users.id
-        ORDER BY skills.id DESC
-    ''').fetchall()
-    db.close()
-    return render_template('skills.html', skills=skills)
+    result = db_get('skills', {'select': '*,users(name,department,email)', 'order': 'id.desc'})
+    if not isinstance(result, list):
+        result = []
+    return render_template('skills.html', skills=result)
 
 @app.route('/skills/post', methods=['POST'])
 def post_skill():
     if 'user_id' not in session:
         return redirect('/auth')
-    offer = request.form['offer']
-    want = request.form['want']
-    description = request.form['description']
-    db = get_db()
-    db.execute('INSERT INTO skills (user_id, offer, want, description) VALUES (?, ?, ?, ?)',
-               (session['user_id'], offer, want, description))
-    db.commit()
-    db.close()
+    db_post('skills', {
+        'user_id': session['user_id'],
+        'offer': request.form['offer'],
+        'want': request.form['want'],
+        'description': request.form['description']
+    })
     return redirect('/skills')
+
 @app.route('/marketplace')
 def marketplace():
     if 'user_id' not in session:
         return redirect('/auth')
-    db = get_db()
-    items = db.execute('''
-        SELECT items.*, users.name, users.department, users.email 
-        FROM items JOIN users ON items.user_id = users.id
-        ORDER BY items.id DESC
-    ''').fetchall()
-    db.close()
-    return render_template('marketplace.html', items=items)
+    result = db_get('items', {'select': '*,users(name,department,email)', 'order': 'id.desc'})
+    if not isinstance(result, list):
+        result = []
+    return render_template('marketplace.html', items=result)
 
 @app.route('/marketplace/post', methods=['POST'])
 def post_item():
     if 'user_id' not in session:
         return redirect('/auth')
-    title = request.form['title']
-    price = request.form['price']
-    category = request.form['category']
-    description = request.form['description']
-    db = get_db()
-    db.execute('INSERT INTO items (user_id, title, price, category, description) VALUES (?, ?, ?, ?, ?)',
-               (session['user_id'], title, price, category, description))
-    db.commit()
-    db.close()
+    db_post('items', {
+        'user_id': session['user_id'],
+        'title': request.form['title'],
+        'price': request.form['price'],
+        'category': request.form['category'],
+        'description': request.form['description']
+    })
     return redirect('/marketplace')
 
 if __name__ == '__main__':

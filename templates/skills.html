@@ -46,8 +46,8 @@
                     </div>
                     <p>{{ skill.description }}</p>
                     <div class="listing-footer">
-                        <span class="user-name">👤 {{ skill.name }} — {{ skill.department }}</span>
-                        <a href="mailto:{{ skill.email }}" class="btn small">Connect</a>
+                        <span class="user-name">{{ skill.users.name }} — {{ skill.users.department }}</span>
+<a href="mailto:{{ skill.users.email }}" class="btn small">Connect</a>
                     </div>
                 </div>
                 {% endfor %}
